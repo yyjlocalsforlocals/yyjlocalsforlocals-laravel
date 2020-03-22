@@ -38,9 +38,9 @@ php artisan key:generate
 ```
 6. Install the Argon Dashboard styles and presets. 
 
-NOTE: This needs ironing out to be more seemless. It will require more time. :) 
+NOTE: These next steps need ironing out to be more seemless. It will require more time. :) 
 
-Also it might not be necessary. I think all this struff below may have been commited to the repo.
+Also, these steps might not be necessary. The Agron assests and UI frontend may have been commited to the repo.
 
 In your project directory:
 
