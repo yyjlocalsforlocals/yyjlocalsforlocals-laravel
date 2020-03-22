@@ -36,17 +36,37 @@ cp app/.env.example app/.env
 cd /location/of/your/project
 php artisan key:generate
 ```
-6. Install the Argon Dashboard styles and presets: 
+6. Install the Argon Dashboard styles and presets. 
+
+NOTE: This needs ironing out to be more seemless. It will require more time. :) 
+
+Also it might not be necessary. I think all this struff below may have been commited to the repo.
+
 In your project directory:
+
+Enter the php-fmp docker container:
+
 ```
+docker-compose exec php-fpm /bin/sh
+```
+
+These commands must be run in the php-fmp docker container:
+```
+cd /var/www
+
 php artisan ui vue --auth
 
 php artisan ui argon
 
 php artisan migrate --seed
+```
+
+Exit php-fmp docker container and install node modules / dependencies:
+```
+Ctrl + d
 
 npm install && npm run dev
-``` 
+```
 
 7. Start the environment with `docker-compose`
 ```
