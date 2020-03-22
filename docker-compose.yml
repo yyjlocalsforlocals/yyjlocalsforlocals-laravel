@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+
+  app:
+    build:
+      context: ./app
+    image: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/
+    volumes:
+      - ./app/:/var/www/
+      - ./app/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on: 
+      - php-fpm
+      - mariadb
+    ports:
+      - 3000:80
+    networks:
+      - app-network
+
+  php-fpm:
+    image: php-fpm
+    build:
+      context: ./php-fpm
+    networks:
+      - app-network
+    volumes:
+      - ./app/:/var/www/
+
+  mariadb:
+    build:
+      context: ./mariadb
+    image: mariadb
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - mariadb-data:/var/lib/mysql:delegated
+      - ./mariadb/my.cnf:/etc/mysql/my.cnf
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mariadb
+    networks:
+      - app-network
+
+  composer:
+    build:
+      context: ./composer
+    image: composer
+    working_dir: /var/www/
+    volumes:
+      - ./app/:/var/www/
+    command: "composer install"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mariadb-data:
