@@ -20,7 +20,7 @@ More stuff ...
 1. [Install Docker](https://www.docker.com/get-started)
 2. Clone this project / repo:
 ```
-git clone ...
+git clone git@github.com:yyjlocalsforlocals/yyjlocalsforlocals-laravel.git
 ```
 3. Using a terminal navigate into the directory where you have cloned the project:
 ```
